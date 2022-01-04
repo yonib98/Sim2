@@ -26,7 +26,19 @@ main:   # Load data from memory
 # Use the code below for 16x8 multiplication
 #   mul		<PROD>, <FACTOR1>, <FACTOR2>
 #   and		<PROD>, <PROD>, t0
+		ori		t2,x0,0xff
+		and 	s0,t2,t3
+		mul		s1,s0,t4
+		and		s1,s1,t0
+		add		t6,x0,s1
+		add		s3,x0,t3
+		srli	s3,s3,8
+		mul 	s1,s3,t4
+		and		s1,s1,t0
+		slli	s1,s1,8
+		add 	t6,t6,s1
 
+		
 # End of your code
 ####################
 		
