@@ -15,7 +15,7 @@ logic a_sel;
 logic b_sel;
 logic [1:0] shift_sel;
 logic upd_prod;
-logic clr_prod
+logic clr_prod;
 
 mult32x32_fsm our_fsm(
 			.clk(clk),

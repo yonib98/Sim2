@@ -23,7 +23,7 @@ always_comb begin
 	1'b0: a_out=a[15:0];
 	1'b1: a_out=a[31:16];
 	endcase
-	case(b_sel):
+	case(b_sel)
 	1'b0: b_out=b[15:0];
 	1'b1: b_out=b[31:16];
 	endcase
@@ -31,20 +31,20 @@ always_comb begin
 	
 	case(shift_sel)
 	2'd0:shift_result=mult_result;
-	2'd1:shift_result={{16{0}},mult_result[31:0],{16{0}}};
-	2'd2:shift_result={mult_result[31:0],{32{0}}};
+	2'd1:shift_result={{16{1'b0}},mult_result[31:0],{16{1'b0}}};
+	2'd2:shift_result={mult_result[31:0],{32{1'b0}}};
 	endcase
 end
 always_ff @(posedge clk,posedge reset) begin
-	if(reset=1'b1) begin
-		product={64{0}};
+	if(reset==1'b1) begin
+		product<={64{1'b0}};
 		end
 	else begin
 		if(upd_prod==1'b1) begin
-			product+=shift_result;
+			product<=product+shift_result;
 			end
-		if(clr_prod=1'b1) begin
-			product={0{64}};
+		if(clr_prod==1'b1) begin
+			product<={64{1'b0}};
 			end
 	end
 end
