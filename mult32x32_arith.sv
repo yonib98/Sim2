@@ -16,6 +16,9 @@ logic [15:0] a_out;
 logic [15:0] b_out;
 logic [31:0] mult_result;
 logic [63:0] shift_result;
+logic [63:0] shift_result_0;
+logic [63:0] shift_result_16;
+logic [63:0] shift_result_32;
 // Put your code here
 // ------------------
 always_comb begin
@@ -28,11 +31,14 @@ always_comb begin
 	1'b1: b_out=b[31:16];
 	endcase
 	mult_result=a_out*b_out;
+	shift_result_0=mult_result;
+	shift_result_16={{16{1'b0}},mult_result[31:0],{16{1'b0}}};
+	shift_result_32={mult_result[31:0],{32{1'b0}}};
 	
 	case(shift_sel)
-	2'd0:shift_result=mult_result;
-	2'd1:shift_result={{16{1'b0}},mult_result[31:0],{16{1'b0}}};
-	2'd2:shift_result={mult_result[31:0],{32{1'b0}}};
+	2'd0:shift_result=shift_result_0;
+	2'd1:shift_result=shift_result_16;
+	2'd2:shift_result=shift_result_32;
 	endcase
 end
 always_ff @(posedge clk,posedge reset) begin

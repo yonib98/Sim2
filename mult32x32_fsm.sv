@@ -41,6 +41,7 @@ always_comb begin
 			end
 			else begin
 				next_state=idle_st;
+				upd_prod=1'b0;
 				busy=1'b0;
 			end
 		end
@@ -61,19 +62,7 @@ always_comb begin
 			shift_sel[1]=1;
 			end
 		E: begin
-			if(start==1'b1 && busy==1'b0) begin
-				next_state=B;
-				upd_prod=1'b0;
-				clr_prod=1'b1;
-				end
-			else if(busy==1'b1) begin
-				next_state=E;
-				busy=1'b0;
-				end
-			else if(busy==1'b0) begin
-				next_state=E;
-				upd_prod=1'b0;
-				end
+			next_state=idle_st;
 			end
 	endcase
 end
